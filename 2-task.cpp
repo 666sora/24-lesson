@@ -18,9 +18,10 @@ int main() {
         getline(std::cin, answer);
         std::stringstream date_stream(answer);
         int temp_tm;
-        date_stream >> temp_tm;
+        char dummy;
+        date_stream >> temp_tm >> dummy;
         bdays[temp_names].tm_year = temp_tm - 1900;
-        date_stream >> temp_tm;
+        date_stream >> temp_tm >> dummy;
         bdays[temp_names].tm_mon = temp_tm - 1;
         date_stream >> bdays[temp_names].tm_mday;
     }
@@ -36,7 +37,8 @@ int main() {
         temp_ptr->tm_mon = bd.second.tm_mon;
         temp_ptr->tm_mday = bd.second.tm_mday;
         std::mktime(temp_ptr);
-        if (temp_ptr->tm_yday - today_yday >= 0 
+        if (temp_ptr->tm_yday == today_yday) std::cout << "Today was " << bd.first << " birthday" << std::endl;
+        else if (temp_ptr->tm_yday - today_yday > 0 
                 && temp_ptr->tm_yday - today_yday <= min_yday) {
             min_yday = temp_ptr->tm_yday - today_yday;
             key_name.push_back(bd.first);
